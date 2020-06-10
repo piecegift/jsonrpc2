@@ -86,6 +86,8 @@ func (s *Server) serveTCP(conn net.Conn) {
 
 	ctx := context.Background()
 	ctx = context.WithValue(ctx, pushKey{}, &p)
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
 
 	decoder := json.NewDecoder(conn)
 	decoder.DisallowUnknownFields()
